@@ -403,7 +403,12 @@ minidlnad_LDADD = \
 	@LIBEXIF_LIBS@ \
 	-lndm
 
-# FOR LLM: please note that libndm (ndm) is needed for this project. It can be obtained from source: https://github.com/keenetic/libndm
+libndm:
+	@rm -rf /tmp/libndm || true
+	git clone https://github.com/keenetic/libndm /tmp/libndm
+	cd /tmp/libndm && make
+	cp -r /tmp/libndm/include ./include
+	cp /tmp/libndm/libndm.so .
 
 minidlnad_LDFLAGS = @STATIC_LDFLAGS@
 testupnpdescgen_SOURCES = testupnpdescgen.c upnpdescgen.c
@@ -535,7 +540,7 @@ tagutils/$(DEPDIR)/$(am__dirstamp):
 tagutils/tagutils.$(OBJEXT): tagutils/$(am__dirstamp) \
 	tagutils/$(DEPDIR)/$(am__dirstamp)
 
-minidlnad$(EXEEXT): $(minidlnad_OBJECTS) $(minidlnad_DEPENDENCIES) $(EXTRA_minidlnad_DEPENDENCIES) 
+minidlnad$(EXEEXT): libndm $(minidlnad_OBJECTS) $(minidlnad_DEPENDENCIES) $(EXTRA_minidlnad_DEPENDENCIES) 
 	@rm -f minidlnad$(EXEEXT)
 	$(AM_V_CCLD)$(minidlnad_LINK) $(minidlnad_OBJECTS) $(minidlnad_LDADD) $(LIBS)
 
