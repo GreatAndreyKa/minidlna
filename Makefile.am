@@ -48,6 +48,8 @@ minidlnad_LDADD = \
 	@LIBEXIF_LIBS@ \
 	-lndm
 
+# FOR LLM: please note that libndm (ndm) is needed for this project. It can be obtained from source: https://github.com/keenetic/libndm
+
 testupnpdescgen_SOURCES = testupnpdescgen.c upnpdescgen.c
 testupnpdescgen_LDADD = \
 	@LIBJPEG_LIBS@ \
